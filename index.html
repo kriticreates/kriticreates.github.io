@@ -8,11 +8,12 @@
       margin: 0;
       padding: 0;
       font-family: "Comic Sans MS", "Trebuchet MS", sans-serif;
-      background: linear-gradient(135deg, #ffd6e8, #ffeef6);
+      background: linear-gradient(135deg, #ffeedd, #fff0f5);
+      overflow: hidden;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       color: #ff4d88;
     }
 
@@ -20,12 +21,13 @@
       background: white;
       padding: 30px;
       border-radius: 25px;
-      width: 420px;
+      width: 450px;
       text-align: center;
       box-shadow: 0 10px 30px rgba(255, 77, 136, 0.3);
       animation: float 3s ease-in-out infinite;
       position: relative;
       overflow: hidden;
+      z-index: 10;
     }
 
     @keyframes float {
@@ -34,14 +36,8 @@
       100% { transform: translateY(0px); }
     }
 
-    h1 {
-      font-size: 2em;
-    }
-
-    p {
-      font-size: 1.05em;
-      line-height: 1.5;
-    }
+    h1 { font-size: 2em; }
+    p { font-size: 1.05em; line-height: 1.5; }
 
     button {
       margin: 15px 10px 0;
@@ -55,56 +51,54 @@
       transition: transform 0.2s, background 0.2s;
       position: relative;
     }
+    button:hover { background: #ff4d88; transform: scale(1.05); }
 
-    button:hover {
-      background: #ff4d88;
-      transform: scale(1.05);
-    }
+    #noBtn { background: #ffc1d9; color: #ff4d88; position: absolute; }
 
-    #noBtn {
-      background: #ffc1d9;
-      color: #ff4d88;
-      position: absolute;
-    }
-
-    .hearts {
-      font-size: 2em;
-      margin-top: 15px;
+    .hearts, .photos {
       display: none;
     }
 
-    .photos {
-      display: none;
-      margin-top: 15px;
-    }
+    .hearts { font-size: 2em; margin-top: 15px; }
 
     .photos img {
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
       object-fit: cover;
       border-radius: 15px;
       margin: 5px;
       opacity: 0;
       animation: fadeIn 1s forwards;
     }
-
     .photos img:nth-child(2) { animation-delay: 0.5s; }
     .photos img:nth-child(3) { animation-delay: 1s; }
 
-    @keyframes fadeIn {
-      to { opacity: 1; }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* Floating balloons and flowers */
+    .float-item {
+      position: absolute;
+      font-size: 30px;
+      animation: floatUp linear infinite;
+      z-index: 1;
+      user-select: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-50px) rotate(360deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <h1>Hi my Bedu </h1>
+    <h1>Hi my Bedu 💕</h1>
 
     <p>
-      Mero pyaro maya 💖<br><br>
-      i love you sm sm sm
-      <br><br>
+      Mero pyaro maya 💖<br>
+      I love you sm sm sm 🥹💞
+    </p>
 
     <h2>Will you be my Valentine? 💘</h2>
 
@@ -112,25 +106,45 @@
     <button id="noBtn" onmouseover="moveNo()">NO 🙄</button>
 
     <div class="hearts" id="hearts">
-      💖
-      <p><strong>“Yay 🥹 I knew you’d say yes, mero Bedu maya 💕”</strong></p>
+      💖💖💖
+      <p><strong>Yay 🥹 I knew you’d say yes, mero Bedu maya 💕</strong></p>
     </div>
+
+    <div class="photos" id="photos">
+      <img src="photo1.jpg" alt="us">
+      <img src="photo2.jpg" alt="us">
+      <img src="photo3.jpg" alt="us">
+    </div>
+
+    <audio id="loveSong">
+      <source src="hajar-janma.mp3" type="audio/mpeg">
+    </audio>
+  </div>
 
   <script>
     function sayYes() {
       document.getElementById("hearts").style.display = "block";
       document.getElementById("photos").style.display = "block";
       document.getElementById("loveSong").play();
-      alert("YAY!!! Sweetu is the happiest person ever 💕");
+
+      // Create floating balloons and flowers
+      const emojis = ['🎈','🎉','💐','🌸','🎊','💖'];
+      for (let i = 0; i < 25; i++) {
+        let el = document.createElement('div');
+        el.className = 'float-item';
+        el.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+        el.style.left = Math.random()*100 + 'vw';
+        el.style.fontSize = (20+Math.random()*30) + 'px';
+        el.style.animationDuration = (5+Math.random()*5) + 's';
+        document.body.appendChild(el);
+      }
     }
 
     function moveNo() {
       const noBtn = document.getElementById("noBtn");
       const card = document.querySelector(".card");
-
       const maxX = card.offsetWidth - noBtn.offsetWidth;
       const maxY = card.offsetHeight - noBtn.offsetHeight;
-
       noBtn.style.left = Math.random() * maxX + "px";
       noBtn.style.top = Math.random() * maxY + "px";
     }
@@ -138,3 +152,6 @@
 
 </body>
 </html>
+
+   
+      
